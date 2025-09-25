@@ -1,0 +1,3 @@
+Statement - PreparedStatment
+Comparate - RAW
+varchar() - nvarchar()
