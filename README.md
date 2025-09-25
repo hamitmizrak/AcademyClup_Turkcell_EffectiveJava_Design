@@ -1,3 +1,76 @@
+# Hamit Mızrak
+
+## 🔍 Hamit Mızrak Repo İstatistikleri
+
+![Ziyaretçi Sayısı](https://visitor-badge.laobi.icu/badge?page_id=hamitmizrak.https://github.com/hamitmizrak/Ecodation_2025_FullStack_SpringReact_2)
+![Stars](https://img.shields.io/github/stars/hamitmizrak/https://github.com/hamitmizrak/Ecodation_2025_FullStack_SpringReact_2?style=social)
+![Forks](https://img.shields.io/github/forks/hamitmizrak/https://github.com/hamitmizrak/Ecodation_2025_FullStack_SpringReact_2?style=social)
+![Son Commit](https://img.shields.io/github/last-commit/hamitmizrak/https://github.com/hamitmizrak/Ecodation_2025_FullStack_SpringReact_2)
+![License](https://img.shields.io/github/license/hamitmizrak/https://github.com/hamitmizrak/Ecodation_2025_FullStack_SpringReact_2)
+
+## 🏆 Hamit Mızrak Profil Ödülleri
+
+![Trophy](https://github-profile-trophy.vercel.app/?username=hamitmizrak&theme=gruvbox)
+
+## 📊 Hamit Mızrak GitHub Kullanıcı İstatistikleri
+
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=hamitmizrak&show_icons=true&theme=tokyonight)
+<br>
+![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=hamitmizrak&layout=compact)
+<br>
+[![Pinned Repo](https://github-readme-stats.vercel.app/api/pin/?username=hamitmizrak&repo=https://github.com/hamitmizrak/Ecodation_2025_FullStack_SpringReact_2)](https://github.com/hamitmizrak/https://github.com/hamitmizrak/Ecodation_2025_FullStack_SpringReact_2)
+
+## 📈 Hamit Mızrak Aktivite Grafiği
+
+![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=hamitmizrak&theme=react-dark)
+
+## ⏱️ Hamit Mızrak Kod Yazma Zamanı (WakaTime)
+
+<!-- WakaTime hesabın varsa -->
+
+[![WakaTime](https://github-readme-stats.vercel.app/api/wakatime?username=hamitmizrak)](https://wakatime.com/@hamitmizrak)
+
+# Ecodation Full Stack Frontend -2
+
+[GitHub Address](https://github.com/hamitmizrak/AcademyClup_Turkcell_EffectiveJava_Design.git)
+
+---
+
+[GitHub](https://github.com/hamitmizrak/AcademyClup_Turkcell_EffectiveJava_Design.git)
+
+---
+
+## Version
+```sh
+git -v
+java --version
+javac --version
+mvn -v
+docker version
+docker -v
+docker-compose version
+```
+---
+
+## Git Init
+```sh 
+git init
+git add .
+git commit -m "spring boot init"
+git remote add origin https://github.com/hamitmizrak/Ecodation_2025_FullStack_SpringReact_2.git 
+git push -u origin master
+git clone https://github.com/hamitmizrak/AcademyClup_Turkcell_EffectiveJava_Design.git
+```
+
+
+## Git Codes
+```sh
+git status
+git logs
+
+```
+
+---
 # Hospital Appointment System — Clean Architecture (Java 17 + H2 + JDBC)
 
 > **Amaç:** Basit görünen bir **Hastane Randevu Sistemi**ni, önce *kötü kod* (anti‑pattern’li) bir sürümden başlatıp, ardından **Clean Code + SOLID + KISS + YAGNI** ve uygun **Design Pattern**’lerle **üretim kalitesine** taşımak. Bu repo, eğitim odaklı olarak tam bir dönüşümü ve mimari örüntüleri göstermeyi hedefler.
