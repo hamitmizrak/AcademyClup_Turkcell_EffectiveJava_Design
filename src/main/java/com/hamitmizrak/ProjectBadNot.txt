@@ -1,0 +1,21 @@
+Kapsadığımız Java Core Özellikleri (kötü kullanım dâhil):
+
+OOP, inheritance, polymorphism (ama encapsulation ihlali)
+Erişim belirleyiciler (public alanlar)
+Enum (doğru tanım, yanlış kullanım)
+Annotation (işlevsiz)
+İç sınıflar (gereksiz comparator)
+Text Blocks (model içinde SQL — katman ihlali)
+Exceptions/Handling (yetersiz)
+Date/Time (java.util.Date → kötü tercih)
+I/O (NIO.2 ile basit log)
+Pattern matching (gereksiz yerde)
+Serialization (plansız)
+Concurrency/Thread (kötü tasarım)
+Collections/Streams (raw types, anlamsız parallel)
+Optional (hiç yok veya yanlış kullanım planlandı)
+Logging (yok, System.out)
+i18n (yok)
+Reflection (tehlikeli)
+
+Not: H2 DB gerçekten kullanılıyor; tabloyu AppointmentRepository.init() çağrısında oluşturuyoruz. Kod bu haliyle çalışır, ama öğrenme amaçlı kötü tasarlanmıştır.

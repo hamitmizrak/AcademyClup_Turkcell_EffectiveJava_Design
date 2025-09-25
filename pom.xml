@@ -4,6 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.3</version>
+        <relativePath/>
+    </parent>
+
     <!--for project information-->
     <groupId>com.hamitmizrak</groupId>
     <artifactId>effectivejava</artifactId>
@@ -70,18 +77,17 @@
 <!--AcademyClup_Turkcell_EffectiveJava-->
 
     <dependencies>
-        <!-- jackson: JSON donusturmelerinde XML -->
-       <!-- <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-xml</artifactId>
-        </dependency>-->
 
-        <!--lombok-->
-       <!-- <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>-->
+        <!-- Web + JPA + H2 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
 
         <!-- model mapper -->
         <dependency>
@@ -90,23 +96,18 @@
             <version>${model.mapper.version}</version>
         </dependency>
 
-
-        <!-- #### DATABASE #################################################  -->
-        <!-- Spring data-jpa-->
-
-        <!-- RDBMS H2DB-->
-       <!-- <dependency>
+        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>runtime</scope>
-        </dependency>-->
+           <!-- <scope>runtime</scope>-->
+        </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>2.3.232</version>
             <scope>runtime</scope>
-        </dependency>
+        </dependency>-->
 
         <!-- RDBMS MYSQL-->
         <!--<dependency>
@@ -143,6 +144,7 @@
         </dependency>-->
         <!--for Test-->
 
+
     </dependencies>
 
     <!--build-->
@@ -150,6 +152,17 @@
         <!--apache tomcat manuel deployment için-->
         <defaultGoal>spring-boot:run</defaultGoal>
         <finalName>${project.artifactId}</finalName>
+
+
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.hamitmizrak.EffectivejavaApplication</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
 </project>
