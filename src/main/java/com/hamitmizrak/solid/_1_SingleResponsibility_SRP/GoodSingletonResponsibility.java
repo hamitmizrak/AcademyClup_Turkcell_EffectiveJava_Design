@@ -1,22 +1,15 @@
-package com.hamitmizrak.solid._1_SingletonResponsibility;
+package com.hamitmizrak.solid._1_SingleResponsibility_SRP;
 
-/*public void process(double price, double tax){
-    // 1- Dikkat Hesaplama iş kuramı
-    double total = price+price*tax;
+// ✅ İYİ: Sorumluluklar ayrıldı; değişimler lokal, test daha kolay.
+// Ne? Bir sınıfın tek bir değişim nedeni olmalı (tek iş yap, onu iyi yap).
+//Neden? Değişim etkisi küçülür, test kolaylaşır, yeniden kullanım artar.
+//Ne zaman? Bir sınıf birden çok bağlamda değişiyorsa (hesaplama + IO + UI), SRP’yi uygula.
+//Koku: “God class”, dev metotlar, birbirinden kopuk işler aynı sınıfta.
 
-    // 2- Konsolea yadırmak
-    System.out.println("Total: "+total);
-
-    // 3- Kalıcık: Veri tabanı
-    // savetoDb(total);
-    System.out.println("Database saved: "+total);
-
-}*/
-
-// LOMBOK
-
+// Özet: Bir sınıfın tek bir değişim nedeni olmalı; hesap, çıktı, kalıcılık birbirinden ayrılmalı.
 
 // 1- Sadece Hesaplama yapmak
+// sadece hesap
 class Calculator{
     // Toplama hesabı
     double total(double total, double tax){
@@ -25,6 +18,7 @@ class Calculator{
 }
 
 // 2- Ekrana çıktı almak
+// sadece IO
 class PrinterData{
     // Toplama hesabı
    void printData(double total){
@@ -35,6 +29,7 @@ class PrinterData{
 
 
 // 3- Ekrana çıktı almak
+// sadece kalıcılık
 class DatabasePersist{
     // Toplama hesabı
     void saveToDb(double total){
@@ -50,9 +45,9 @@ class AllMain{
     DatabasePersist  databasePersist = new DatabasePersist();
 
     void allProcess(double price, double tax){
-        double totalData=  calculator.total(price,tax);
-        printer.printData(totalData);
-        databasePersist.saveToDb(totalData);
+        double totalData=  calculator.total(price,tax);// iş kuralı izole
+        printer.printData(totalData);  // IO ayrı
+        databasePersist.saveToDb(totalData); // kalıcılık ayrı
     }
 }
 
@@ -67,3 +62,7 @@ public class GoodSingletonResponsibility {
 
     }
 }
+
+
+// Evet:  Direk hastane randevü geçmek ve SOLID ekran üzerinden analtımını sağlamak
+// Hayır
