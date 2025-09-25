@@ -94,16 +94,6 @@
 
         <!-- #### DATABASE #################################################  -->
         <!-- Spring data-jpa-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-
-        <!-- JDBC Template-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency>
 
         <!-- RDBMS H2DB-->
         <dependency>
@@ -111,6 +101,14 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+        <!--<dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.3.232</version>
+            <scope>runtime</scope>
+        </dependency>
+         -->
 
         <!-- RDBMS MYSQL-->
         <!--<dependency>
@@ -147,11 +145,7 @@
         </dependency>-->
 
         <!--for Test-->
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+
     </dependencies>
 
     <!--build-->
