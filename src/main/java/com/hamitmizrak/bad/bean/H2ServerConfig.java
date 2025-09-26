@@ -2,7 +2,7 @@ package com.hamitmizrak.bad.bean;
 
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+//@Configuration
 public class H2ServerConfig {
 
     // H2 Web Console (http://localhost:4444) - tek örnek

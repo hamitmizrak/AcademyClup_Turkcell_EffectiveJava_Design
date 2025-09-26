@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 
-public class HospitalAppMain {
+public class BadHospitalAppMain {
 
     static Scanner sc = new Scanner(System.in);
     static SimpleDateFormat F = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -76,7 +76,8 @@ public class HospitalAppMain {
     }
 
     public static void main(String[] args) throws SQLException {
-
+        BadHospitalAppMain hospitalAppMain= new BadHospitalAppMain();
+        hospitalAppMain.allData();
     }
 
     static void add() {

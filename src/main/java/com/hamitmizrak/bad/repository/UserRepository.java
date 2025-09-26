@@ -1,11 +1,7 @@
 package com.hamitmizrak.bad.repository;
 
-
-
-
 import com.hamitmizrak.bad.auth.Role;
 import com.hamitmizrak.bad.auth.User;
-
 import java.sql.*;
 
 public class UserRepository {
@@ -47,9 +43,14 @@ public class UserRepository {
                 u.role = Role.valueOf(rs.getString("ROLE"));
                 u.name = rs.getString("NAME");
                 u.nationalId = rs.getString("NATIONAL_ID");
+
                 return u;
             }
-        } catch (SQLException ignored) {}
+        } catch (SQLException ignored) {
+
+        } finally {
+            // c.close();
+        }
         return null; // Kötü: Optional yerine null
     }
 }

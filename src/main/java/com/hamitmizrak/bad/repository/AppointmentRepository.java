@@ -90,7 +90,7 @@ public class AppointmentRepository {
                 // KÖTÜ PRATİK: Parametre sırası hatasına açık, zorunlu alan garantisi yok,
                 // kapsülleme (encapsulation) ihlali: a.status alanına doğrudan erişim ❌
                 // EKİSİ ❌
-                /*Appointment a = new Appointment(
+                Appointment a = new Appointment(
                         rs.getLong("ID"),
                         rs.getLong("PATIENT_ID"),
                         rs.getLong("DOCTOR_ID"),
@@ -98,7 +98,7 @@ public class AppointmentRepository {
                         rs.getInt("MINUTES")
                 );
                 a.status = AppointmentStatus.valueOf(rs.getString("STATUS"));
-                list.add(a)*/;
+                list.add(a);
             }
             // Kötü: kapatmalar eksik (sızıntı riski)
         } catch (SQLException e) {

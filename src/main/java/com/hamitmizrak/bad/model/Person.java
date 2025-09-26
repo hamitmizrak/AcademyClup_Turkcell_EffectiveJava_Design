@@ -1,7 +1,6 @@
 package com.hamitmizrak.bad.model;
 
 
-
 import com.hamitmizrak.bad.common.Audited;
 
 import java.io.Serializable;
@@ -15,12 +14,15 @@ Neden kötü? public alanlar, equals/hashCode yok, validation yok.
 
 @Audited("entity") // Kötü: hiçbir etkisi yok
 public class Person implements Serializable { // Kötü: Serializable ama serialVersionUID yok
+    // public static final Long serialVersionUID = 1L;
+    // public static final Long serialVersionUID = 15415511515544L;
     public Long id;              // Kötü: public alan
     public String name;          // Kötü: null kontrolleri yok
     public String nationalId;    // Kötü: regex/format doğrulaması yok
     public Date birthDate;       // Kötü: java.time yerine eski Date
 
-    public Person() {} // Kötü: anlamsız boş ctor
+    public Person() {
+    } // Kötü: anlamsız boş ctor
 
     // Kötü: setter/getter yok, doğrudan field erişimi teşvik ediliyor
 }
