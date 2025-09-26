@@ -180,7 +180,12 @@
                 <!-- CLI için gerekli değil; web uygulamasını paketlemek/çalıştırmak için duruyor -->
                 <configuration>
                     <!-- Eğer bir Spring Boot main'iniz varsa burada belirtin -->
-                    <mainClass>com.hamitmizrak.EffectivejavaApplication</mainClass>
+                    <!--
+                     mvn -U -DskipTests clean package
+                     mvn spring-boot:run
+                     mvn -Dspring-boot.run.main-class=com.hamitmizrak.good.menu.MainConsole spring-boot:run
+                     -->
+                    <mainClass>com.hamitmizrak.MainProject</mainClass>
                 </configuration>
             </plugin>
         </plugins>

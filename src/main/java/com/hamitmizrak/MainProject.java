@@ -1,6 +1,7 @@
 package com.hamitmizrak;
 
 import com.hamitmizrak.bad.BadHospitalAppMain;
+import com.hamitmizrak.good.menu.MainConsole;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -8,11 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MainProject {
 
     // PSVM
-    public static void main(String[] args) {
-        SpringApplication.run(MainProject.class, args);
-
+    public static void main(String[] args) throws Exception {
         // Bad
-        BadHospitalAppMain badHospitalAppMain= new BadHospitalAppMain();
-        badHospitalAppMain.allData();
+        //BadHospitalAppMain badHospitalAppMain= new BadHospitalAppMain();
+        //badHospitalAppMain.allData();
+
+        // Good
+        //MainConsole MainConsole= new MainConsole();
+        //MainConsole.run();
+
+        SpringApplication.run(MainProject.class, args);
     }
 }
