@@ -9,7 +9,7 @@ package com.hamitmizrak.good.domain;
 
 import java.time.LocalDate;
 
-public abstract  class Person {
+public abstract class Person {
     private Long id;
     private String name;
     private String nationalId;

@@ -21,23 +21,19 @@ import java.util.Locale;
 
 public class MainConsole {
 
-    // Field
     private final UserRepository userRepo = new UserRepository();
     private final AppointmentRepository apptRepo = new AppointmentRepository();
     private final DoctorRepository doctorRepo = new DoctorRepository();
     private final PatientRepository patientRepo = new PatientRepository();
     private final DepartmentRepository deptRepo = new DepartmentRepository();
+
     private final AppointmentService appts = new AppointmentService(apptRepo, patientRepo, doctorRepo);
     private final AuthService auth = new AuthService(userRepo, Locale.getDefault());
 
     private static final DateTimeFormatter DT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-    // Parametresiz Cosntructor
-    public MainConsole() throws Exception {
-        run();
-    }
+    public MainConsole() throws Exception { run(); }
 
-    // run Method
     public void run() throws Exception {
         Migrations.migrate();
 
@@ -64,18 +60,16 @@ public class MainConsole {
             }
         }
 
-        // Menüler
         menuLoop();
     }
 
-    // Role
     private Role askRoleChoice() {
         System.out.println("""
-                Rol Seçiniz (boş geç: PATIENT):
-                 1) PATIENT  (hasta)
-                 2) DOCTOR   (doktor)
-                 3) ADMIN    (yönetici)
-                """);
+        Rol Seçiniz (boş geç: PATIENT):
+         1) PATIENT  (hasta)
+         2) DOCTOR   (doktor)
+         3) ADMIN    (yönetici)
+        """);
 
         while (true) {
             String in = ConsoleIO.ask("Seçim: ").trim().toLowerCase();
@@ -117,9 +111,7 @@ public class MainConsole {
     }
 
 
-    /**
-     * identifier email ise email’i, değilse username’i ön-doldurup kayıt akışını yürütür.
-     */
+    /** identifier email ise email’i, değilse username’i ön-doldurup kayıt akışını yürütür. */
     private void handleRegisterFlowPrefill(String identifier) throws SQLException {
         System.out.println("\n=== Kayıt (Register) ===");
 
@@ -206,61 +198,37 @@ public class MainConsole {
                 case "6" -> whoAmI();
 
                 case "7" -> {
-                    if (role != Role.ADMIN) {
-                        deny();
-                        break;
-                    }
+                    if (role != Role.ADMIN) { deny(); break; }
                     createDepartmentFlow();
                 }
                 case "8" -> {
-                    if (!(role == Role.ADMIN || role == Role.DOCTOR)) {
-                        deny();
-                        break;
-                    }
+                    if (!(role == Role.ADMIN || role == Role.DOCTOR)) { deny(); break; }
                     createDoctorFlow();
                 }
                 case "9" -> {
-                    if (!(role == Role.ADMIN || role == Role.PATIENT)) {
-                        deny();
-                        break;
-                    }
+                    if (!(role == Role.ADMIN || role == Role.PATIENT)) { deny(); break; }
                     createPatientFlow();
                 }
                 case "10" -> {
-                    if (role != Role.ADMIN) {
-                        deny();
-                        break;
-                    }
+                    if (role != Role.ADMIN) { deny(); break; }
                     changeDoctorAvailabilityFlow();
                 }
 
                 // ADMIN’e özel listeler
                 case "11" -> {
-                    if (role != Role.ADMIN) {
-                        deny();
-                        break;
-                    }
+                    if (role != Role.ADMIN) { deny(); break; }
                     listDoctorsFlow();
                 }
                 case "12" -> {
-                    if (role != Role.ADMIN) {
-                        deny();
-                        break;
-                    }
+                    if (role != Role.ADMIN) { deny(); break; }
                     listPatientsFlow();
                 }
                 case "13" -> {
-                    if (role != Role.ADMIN) {
-                        deny();
-                        break;
-                    }
+                    if (role != Role.ADMIN) { deny(); break; }
                     listDepartmentsFlow();
                 }
                 case "14" -> {
-                    if (role != Role.ADMIN) {
-                        deny();
-                        break;
-                    }
+                    if (role != Role.ADMIN) { deny(); break; }
                     listAvailableDoctorsFlow();
                 }
 
@@ -293,23 +261,23 @@ public class MainConsole {
         // Role-bazlı ekler
         if (role == Role.ADMIN) {
             sb.append("""
-                     7) Departman Ekle
-                     8) Doktor Ekle
-                     9) Hasta Ekle
-                    10) Doktor Müsaitlik Değiştir (true/false)
-                    11) Doktorları Listele
-                    12) Hastaları Listele
-                    13) Departmanları Listele
-                    14) Müsait Doktorları Listele
-                    """);
+                7) Departman Ekle
+                8) Doktor Ekle
+                9) Hasta Ekle
+               10) Doktor Müsaitlik Değiştir (true/false)
+               11) Doktorları Listele
+               12) Hastaları Listele
+               13) Departmanları Listele
+               14) Müsait Doktorları Listele
+                """);
         } else if (role == Role.DOCTOR) {
             sb.append("""
-                    8) Doktor Ekle
-                    """);
+                8) Doktor Ekle
+                """);
         } else if (role == Role.PATIENT) {
             sb.append("""
-                    9) Hasta Ekle
-                    """);
+                9) Hasta Ekle
+                """);
         }
         sb.append("""
                 0) Çık
@@ -318,18 +286,13 @@ public class MainConsole {
         System.out.print(sb);
     }
 
-    private void deny() {
-        System.out.println("Yetkiniz yok.");
-    }
+    private void deny() { System.out.println("Yetkiniz yok."); }
 
     // ---------- Menü İşlemleri (CRUD & Yardımcılar) ----------
     private void createDepartmentFlow() throws SQLException {
         System.out.println("\n=== Departman Ekle (ADMIN) ===");
         String name = ConsoleIO.ask("Departman adı: ").trim();
-        if (name.isEmpty()) {
-            System.out.println("İşlem iptal: Ad boş olamaz.");
-            return;
-        }
+        if (name.isEmpty()) { System.out.println("İşlem iptal: Ad boş olamaz."); return; }
         long id = deptRepo.insert(name);
         System.out.println("Departman oluşturuldu. ID=" + id);
     }
@@ -338,19 +301,13 @@ public class MainConsole {
         System.out.println("\n=== Doktor Ekle (ADMIN/DOCTOR) ===");
 
         var deps = deptRepo.list();
-        if (deps.isEmpty()) {
-            System.out.println("Henüz departman yok. Önce 'Departman Ekle' yapınız.");
-            return;
-        }
+        if (deps.isEmpty()) { System.out.println("Henüz departman yok. Önce 'Departman Ekle' yapınız."); return; }
         System.out.println("Mevcut Departmanlar:");
         deps.forEach(d -> System.out.printf("  ID=%d | NAME=%s%n", d.id(), d.name()));
 
         long deptId = askLong("Department ID: ");
         var depOpt = deptRepo.findById(deptId);
-        if (depOpt.isEmpty()) {
-            System.out.println("İşlem iptal: Department bulunamadı (ID=" + deptId + ")");
-            return;
-        }
+        if (depOpt.isEmpty()) { System.out.println("İşlem iptal: Department bulunamadı (ID=" + deptId + ")"); return; }
         var dep = depOpt.get();
         System.out.printf("Seçilen Departman: ID=%d | NAME=%s%n", dep.id(), dep.name());
 
@@ -375,10 +332,7 @@ public class MainConsole {
     private void changeDoctorAvailabilityFlow() throws SQLException {
         System.out.println("\n=== Doktor Müsaitlik Değiştir (ADMIN) ===");
         long doctorId = askLong("Doktor ID: ");
-        if (!doctorRepo.existsById(doctorId)) {
-            System.out.println("Doktor bulunamadı.");
-            return;
-        }
+        if (!doctorRepo.existsById(doctorId)) { System.out.println("Doktor bulunamadı."); return; }
         String ans = ConsoleIO.ask("Yeni durum (E: true / h: false): ").trim().toLowerCase();
         boolean newVal = ans.isEmpty() || ans.startsWith("e");
         boolean ok = doctorRepo.updateAvailability(doctorId, newVal);
@@ -388,10 +342,7 @@ public class MainConsole {
     private void listDoctorsFlow() throws SQLException {
         System.out.println("\n=== Doktorları Listele (ADMIN) ===");
         var list = doctorRepo.list();
-        if (list.isEmpty()) {
-            System.out.println("Kayıt yok.");
-            return;
-        }
+        if (list.isEmpty()) { System.out.println("Kayıt yok."); return; }
         list.forEach(d -> System.out.printf("ID=%d | NAME=%s | DEPT_ID=%d | AVAILABLE=%s%n",
                 d.id(), d.name(), d.departmentId(), d.available()));
     }
@@ -399,10 +350,7 @@ public class MainConsole {
     private void listAvailableDoctorsFlow() throws SQLException {
         System.out.println("\n=== Müsait Doktorları Listele (ADMIN) ===");
         var list = doctorRepo.listAvailable();
-        if (list.isEmpty()) {
-            System.out.println("Kayıt yok.");
-            return;
-        }
+        if (list.isEmpty()) { System.out.println("Kayıt yok."); return; }
         list.forEach(d -> System.out.printf("ID=%d | NAME=%s | DEPT_ID=%d | AVAILABLE=%s%n",
                 d.id(), d.name(), d.departmentId(), d.available()));
     }
@@ -410,10 +358,7 @@ public class MainConsole {
     private void listPatientsFlow() throws SQLException {
         System.out.println("\n=== Hastaları Listele (ADMIN) ===");
         var list = patientRepo.list();
-        if (list.isEmpty()) {
-            System.out.println("Kayıt yok.");
-            return;
-        }
+        if (list.isEmpty()) { System.out.println("Kayıt yok."); return; }
         list.forEach(p -> System.out.printf("ID=%d | NAME=%s | TCKN=%s | PHONE=%s | EMAIL=%s%n",
                 p.id(), p.name(), p.nationalId(), p.phone(), p.email()));
     }
@@ -421,10 +366,7 @@ public class MainConsole {
     private void listDepartmentsFlow() throws SQLException {
         System.out.println("\n=== Departmanları Listele (ADMIN) ===");
         var list = deptRepo.list();
-        if (list.isEmpty()) {
-            System.out.println("Kayıt yok.");
-            return;
-        }
+        if (list.isEmpty()) { System.out.println("Kayıt yok."); return; }
         list.forEach(d -> System.out.printf("ID=%d | NAME=%s%n", d.id(), d.name()));
     }
 
@@ -456,7 +398,7 @@ public class MainConsole {
         System.out.println("\n=== Randevu Listele ===");
         String docStr = ConsoleIO.ask("Doktor ID (boş geçilebilir): ").trim();
         String patStr = ConsoleIO.ask("Hasta ID (boş geçilebilir): ").trim();
-        String stStr = ConsoleIO.ask("Durum (PENDING/CONFIRMED/CANCELLED) (boş geçilebilir): ").trim().toUpperCase();
+        String stStr  = ConsoleIO.ask("Durum (PENDING/CONFIRMED/CANCELLED) (boş geçilebilir): ").trim().toUpperCase();
 
         Long doctorId = docStr.isEmpty() ? null : Long.parseLong(docStr);
         Long patientId = patStr.isEmpty() ? null : Long.parseLong(patStr);
@@ -480,12 +422,8 @@ public class MainConsole {
         long id = askLong("Randevu ID: ");
         String stStr = ConsoleIO.ask("Yeni Durum (PENDING/CONFIRMED/CANCELLED): ").trim().toUpperCase();
         AppointmentStatus st;
-        try {
-            st = AppointmentStatus.valueOf(stStr);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Geçersiz durum.");
-            return;
-        }
+        try { st = AppointmentStatus.valueOf(stStr); }
+        catch (IllegalArgumentException e) { System.out.println("Geçersiz durum."); return; }
         boolean ok = appts.updateStatus(new AppointmentStatusUpdateRequest(id, st));
         System.out.println(ok ? "Durum güncellendi." : "Güncelleme başarısız: ID bulunamadı.");
     }
@@ -503,25 +441,16 @@ public class MainConsole {
         LocalDateTime dt = askDateTime("Tarih-Saat (yyyy-MM-dd HH:mm): ");
 
         boolean availFlag = doctorRepo.isAvailable(doctorId).orElse(true);
-        boolean conflict = isDoctorSlotConflict(doctorId, dt);
+        boolean conflict  = isDoctorSlotConflict(doctorId, dt);
 
-        if (!availFlag) {
-            System.out.println("Sonuç: AVAILABLE=false → Müsait değil.");
-            return;
-        }
-        if (conflict) {
-            System.out.println("Sonuç: Slot dolu → Müsait değil.");
-            return;
-        }
+        if (!availFlag) { System.out.println("Sonuç: AVAILABLE=false → Müsait değil."); return; }
+        if (conflict)   { System.out.println("Sonuç: Slot dolu → Müsait değil.");       return; }
         System.out.println("Sonuç: Müsait.");
     }
 
     private void whoAmI() {
         var sess = SessionContext.current();
-        if (sess.isEmpty()) {
-            System.out.println("Oturum yok.");
-            return;
-        }
+        if (sess.isEmpty()) { System.out.println("Oturum yok."); return; }
         var u = sess.get();
         System.out.printf("ID=%d | USERNAME=%s | ROLE=%s%n", u.id(), u.username(), u.role().name());
     }
@@ -545,32 +474,22 @@ public class MainConsole {
 
     private String askStrongPasswordTwice() {
         System.out.println("""
-                Parola Kuralları:
-                 - En az 6 karakter
-                 - En az 1 harf ve 1 rakam içermeli
-                """);
+            Parola Kuralları:
+             - En az 6 karakter
+             - En az 1 harf ve 1 rakam içermeli
+            """);
         while (true) {
             String p1 = ConsoleIO.askPasswordMasked("Parola: ");
-            if (!Validators.strongPassword(p1)) {
-                System.out.println("Parola zayıf.");
-                continue;
-            }
+            if (!Validators.strongPassword(p1)) { System.out.println("Parola zayıf."); continue; }
             String p2 = ConsoleIO.askPasswordMasked("Parola (tekrar): ");
-            if (!p1.equals(p2)) {
-                System.out.println("Parolalar uyuşmuyor.");
-                continue;
-            }
+            if (!p1.equals(p2)) { System.out.println("Parolalar uyuşmuyor."); continue; }
             return p1;
         }
     }
 
     private long askLong(String prompt) {
-        try {
-            return Long.parseLong(ConsoleIO.ask(prompt).trim());
-        } catch (NumberFormatException e) {
-            System.out.println("Geçersiz sayısal değer.");
-            return askLong(prompt);
-        }
+        try { return Long.parseLong(ConsoleIO.ask(prompt).trim()); }
+        catch (NumberFormatException e) { System.out.println("Geçersiz sayısal değer."); return askLong(prompt); }
     }
 
     private LocalDateTime askDateTime(String prompt) {
@@ -578,10 +497,7 @@ public class MainConsole {
             String s = ConsoleIO.ask(prompt).trim();
             try {
                 LocalDateTime dt = LocalDateTime.parse(s, DT);
-                if (dt.isBefore(LocalDateTime.now())) {
-                    System.out.println("Geçmiş tarih-saat olamaz.");
-                    continue;
-                }
+                if (dt.isBefore(LocalDateTime.now())) { System.out.println("Geçmiş tarih-saat olamaz."); continue; }
                 return dt.withSecond(0).withNano(0);
             } catch (DateTimeParseException e) {
                 System.out.println("Format hatalı. Örn: 2025-10-15 14:30");

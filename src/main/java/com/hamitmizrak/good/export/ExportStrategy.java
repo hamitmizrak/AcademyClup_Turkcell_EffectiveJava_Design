@@ -22,6 +22,5 @@ import java.util.List;
 
 public interface ExportStrategy {
     Path exportAppointments(List<Appointment> list, Path target) throws IOException;
-
     List<Appointment> importAppointments(Path source) throws IOException;
 }

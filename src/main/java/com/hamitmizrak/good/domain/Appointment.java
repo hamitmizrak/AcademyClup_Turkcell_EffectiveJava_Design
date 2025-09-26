@@ -1,9 +1,5 @@
 package com.hamitmizrak.good.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -19,11 +15,6 @@ import java.util.Objects;
   - version int alanı default 0’dır; repo insert sonrası 0 başlatılır, update’lerde artar.
 */
 
-// Builder:
-/*
-1- parametreli ctor private oslun
-2- Innerclass Builder (Constant)
-* */
 public class Appointment {
 
     // — Kalıcılık alanları —
@@ -40,20 +31,39 @@ public class Appointment {
     private final String note;
 
     // — Yalnızca Builder kullanabilsin diye private ctor —
-    private Appointment(Builder builder) {
-        this.id        = builder.id;
-        this.version   = builder.version;
-        this.patientId = builder.patientId;
-        this.doctorId  = builder.doctorId;
-        this.dateTime  = builder.dateTime;
-        this.status    = builder.status;
-        this.note      = builder.note;
+    private Appointment(Builder b) {
+        this.id        = b.id;
+        this.version   = b.version;
+        this.patientId = b.patientId;
+        this.doctorId  = b.doctorId;
+        this.dateTime  = b.dateTime;
+        this.status    = b.status;
+        this.note      = b.note;
+    }
+
+    // — GETTER’lar —
+    public Long getId() { return id; }
+    public int getVersion() { return version; }
+    public long getPatientId() { return patientId; }
+    public long getDoctorId() { return doctorId; }
+    public LocalDateTime getDateTime() { return dateTime; }
+    public AppointmentStatus getStatus() { return status; }
+    public String getNote() { return note; }
+
+    // — SETTER (kalıcılık/iş akışı için kontrollü) —
+    public void setId(Long id) { this.id = id; }
+    public void setVersion(int version) {
+        if (version < 0) throw new IllegalArgumentException("version negatif olamaz");
+        this.version = version;
+    }
+    public void setStatus(AppointmentStatus status) {
+        this.status = Objects.requireNonNull(status, "status zorunludur");
     }
 
     // — Builder giriş noktası —
     public static Builder builder() { return new Builder(); }
 
-    // — BUILDER (INNER CLASS)—
+    // — BUILDER —
     public static final class Builder {
         private Long id;                 // çoğunlukla null
         private int version = 0;         // varsayılan 0
@@ -63,14 +73,9 @@ public class Appointment {
         private AppointmentStatus status;// required
         private String note;             // optional
 
-        // parametresiz Constructor (private)
         private Builder() {}
 
-        // parametreli Constructor (private)
-        public Builder id(Long id) {
-            this.id = id; return this;
-        }
-
+        public Builder id(Long id) { this.id = id; return this; }
         public Builder version(int version) { this.version = version; return this; }
         public Builder patientId(long patientId) { this.patientId = patientId; return this; }
         public Builder doctorId(long doctorId) { this.doctorId = doctorId; return this; }
@@ -99,13 +104,11 @@ public class Appointment {
                 && Objects.equals(dateTime, that.dateTime);
     }
 
-    // hashCode
     @Override
     public int hashCode() {
         return (id != null) ? id.hashCode() : Objects.hash(doctorId, patientId, dateTime);
     }
 
-    // toString
     @Override
     public String toString() {
         return "Appointment{" +
@@ -117,24 +120,5 @@ public class Appointment {
                 ", status=" + status +
                 ", note='" + note + '\'' +
                 '}';
-    }
-
-    // — GETTER’lar —
-    public Long getId() { return id; }
-    public int getVersion() { return version; }
-    public long getPatientId() { return patientId; }
-    public long getDoctorId() { return doctorId; }
-    public LocalDateTime getDateTime() { return dateTime; }
-    public AppointmentStatus getStatus() { return status; }
-    public String getNote() { return note; }
-
-    // — SETTER (kalıcılık/iş akışı için kontrollü) —
-    public void setId(Long id) { this.id = id; }
-    public void setVersion(int version) {
-        if (version < 0) throw new IllegalArgumentException("version negatif olamaz");
-        this.version = version;
-    }
-    public void setStatus(AppointmentStatus status) {
-        this.status = Objects.requireNonNull(status, "status zorunludur");
     }
 }

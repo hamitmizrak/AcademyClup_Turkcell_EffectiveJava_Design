@@ -1,5 +1,7 @@
 package com.hamitmizrak.good.runner;
 
+
+
 /*
  CLEAN-UP ÖZETİ
  ✅ Uygulama ayağa kalkınca H2 şemasını kurar (idempotent).

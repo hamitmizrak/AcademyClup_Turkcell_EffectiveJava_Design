@@ -100,16 +100,16 @@ public class AppointmentRepository extends BaseRepository {
     // - Okunabilirlik ↑: Alan isimleriyle kurulum
     // - Güvenlik ↑: build() zorunlu alanları doğrular (fail-fast)
     // - Kapsülleme ↑: a.status = ... gibi doğrudan alan erişimi yok
-    private Appointment map(ResultSet resultSet) throws SQLException {
-        Appointment appointment = Appointment.builder()
-                .patientId(resultSet.getLong("PATIENT_ID"))
-                .doctorId(resultSet.getLong("DOCTOR_ID"))
-                .dateTime(resultSet.getTimestamp("DATETIME").toLocalDateTime())
-                .status(AppointmentStatus.valueOf(resultSet.getString("STATUS")))
-                .note(resultSet.getString("NOTE"))
+    private Appointment map(ResultSet rs) throws SQLException {
+        Appointment a = Appointment.builder()
+                .patientId(rs.getLong("PATIENT_ID"))
+                .doctorId(rs.getLong("DOCTOR_ID"))
+                .dateTime(rs.getTimestamp("DATETIME").toLocalDateTime())
+                .status(AppointmentStatus.valueOf(rs.getString("STATUS")))
+                .note(rs.getString("NOTE"))
                 .build();
-        appointment.setId(resultSet.getLong("ID"));
-        //appointment.setVersion(resultSet.getInt("VERSION"));
-        return appointment;
+        a.setId(rs.getLong("ID"));
+        //a.setVersion(rs.getInt("VERSION"));
+        return a;
     }
 }

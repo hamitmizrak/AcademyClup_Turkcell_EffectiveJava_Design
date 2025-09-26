@@ -1,8 +1,4 @@
 package com.hamitmizrak.good.config;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 /*
  CLEAN-UP ÖZETİ
@@ -11,20 +7,20 @@ import java.sql.Statement;
  ✅ Text block ile okunabilir SQL, TIMESTAMP alanları ve VERSION sütunu.
  ✅ İleride Login/Register/WhoAmI için USERS ve ROLE kavramı hazır.
 */
-public final class Migrations {
 
-    // parametresiz ctor
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public final class Migrations {
     private Migrations() { }
 
     /** Uygulama başında tablo şemasını hazırlar (idempotent). */
     public static void migrate() throws SQLException {
-        // ✅ CLEAN CODE: try-with-resources
-        try (Connection connection = DB.getConnection();
-             //Statement statement = connection.createStatement()
-             Statement preparedStatement = connection.createStatement()
-        ) {
+        try (Connection c = DB.getConnection(); Statement s = c.createStatement()) {
+
             // USERS (Login/Register/WhoAmI için)
-            preparedStatement.execute("""
+            s.execute("""
                 CREATE TABLE IF NOT EXISTS USERS(
                   ID IDENTITY PRIMARY KEY,
                   USERNAME VARCHAR(64) UNIQUE NOT NULL,
@@ -38,7 +34,7 @@ public final class Migrations {
             """);
 
             // DEPARTMENTS
-            preparedStatement.execute("""
+            s.execute("""
                 CREATE TABLE IF NOT EXISTS DEPARTMENTS(
                   ID IDENTITY PRIMARY KEY,
                   NAME VARCHAR(64) UNIQUE NOT NULL
@@ -46,7 +42,7 @@ public final class Migrations {
             """);
 
             // DOCTORS
-            preparedStatement.execute("""
+            s.execute("""
                 CREATE TABLE IF NOT EXISTS DOCTORS(
                   ID IDENTITY PRIMARY KEY,
                   NAME VARCHAR(128) NOT NULL,
@@ -57,7 +53,7 @@ public final class Migrations {
             """);
 
             // PATIENTS
-            preparedStatement.execute("""
+            s.execute("""
                 CREATE TABLE IF NOT EXISTS PATIENTS(
                   ID IDENTITY PRIMARY KEY,
                   NAME VARCHAR(128) NOT NULL,
@@ -68,7 +64,7 @@ public final class Migrations {
             """);
 
             // APPOINTMENTS
-            preparedStatement.execute("""
+            s.execute("""
                 CREATE TABLE IF NOT EXISTS APPOINTMENTS(
                   ID IDENTITY PRIMARY KEY,
                   PATIENT_ID BIGINT NOT NULL,

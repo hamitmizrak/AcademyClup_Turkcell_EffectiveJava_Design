@@ -8,9 +8,9 @@ public class Doctor extends Person {
     private Long departmentId;
     private boolean available = true;
 
-    // GETTER AND SETTER
     public Long getDepartmentId()      { return departmentId; }
     public boolean isAvailable()       { return available; }
+
     public void setDepartmentId(Long departmentId) { this.departmentId = departmentId; }
     public void setAvailable(boolean available)     { this.available = available; }
 }

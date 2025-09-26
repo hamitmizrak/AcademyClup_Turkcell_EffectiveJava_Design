@@ -13,7 +13,6 @@ import java.sql.SQLException;
 
 public abstract class BaseRepository {
     protected Connection connection() throws SQLException {
-        // yazdığımız DB'deki getConnection çağır.
         return DB.getConnection();
     }
 }

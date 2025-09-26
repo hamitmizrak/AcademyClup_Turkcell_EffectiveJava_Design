@@ -9,8 +9,8 @@ public class DepartmentRepository extends BaseRepository {
 
     public long insert(String name) throws SQLException {
         final String sql = "INSERT INTO DEPARTMENTS(NAME) VALUES (?)";
-        try (Connection connection = connection();
-             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection c = connection();
+             PreparedStatement ps = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, name);
             ps.executeUpdate();
             try (ResultSet rk = ps.getGeneratedKeys()) {
@@ -21,8 +21,8 @@ public class DepartmentRepository extends BaseRepository {
 
     public boolean existsById(long id) throws SQLException {
         final String sql = "SELECT 1 FROM DEPARTMENTS WHERE ID=? LIMIT 1";
-        try (Connection connection = connection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (Connection c = connection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next();
@@ -32,8 +32,8 @@ public class DepartmentRepository extends BaseRepository {
 
     public Optional<DeptRow> findById(long id) throws SQLException {
         final String sql = "SELECT ID, NAME FROM DEPARTMENTS WHERE ID=?";
-        try (Connection connection = connection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (Connection c = connection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (!rs.next()) return Optional.empty();
@@ -44,8 +44,8 @@ public class DepartmentRepository extends BaseRepository {
 
     public List<DeptRow> list() throws SQLException {
         final String sql = "SELECT ID, NAME FROM DEPARTMENTS ORDER BY ID";
-        try (Connection connection = connection();
-             PreparedStatement ps = connection.prepareStatement(sql);
+        try (Connection c = connection();
+             PreparedStatement ps = c.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             List<DeptRow> out = new ArrayList<>();
             while (rs.next()) {
