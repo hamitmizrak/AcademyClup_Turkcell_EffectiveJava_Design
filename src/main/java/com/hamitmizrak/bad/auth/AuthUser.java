@@ -1,12 +1,12 @@
 package com.hamitmizrak.bad.auth;
 
 
-import com.hamitmizrak.bad.model.Person;
+import com.hamitmizrak.bad.model.ModelPerson;
 
-public class User extends Person { // Kötü: domain karışıyor (Person + User)
+public class AuthUser extends ModelPerson { // Kötü: domain karışıyor (Person + User)
     public String username;     // Kötü: public alanlar
     public String password;     // Kötü: Base64 "şifreleme"
-    public Role role = Role.PATIENT;
+    public AuthRole role = AuthRole.PATIENT;
     public String token;        // Kötü: in-memory, expiry yok
 
     // Kötü: Model'de tablo SQL'i tutuluyor (katman ihlali)

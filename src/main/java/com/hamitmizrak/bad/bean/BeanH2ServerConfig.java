@@ -1,9 +1,7 @@
 package com.hamitmizrak.bad.bean;
 
-import org.springframework.context.annotation.Configuration;
-
 //@Configuration
-public class H2ServerConfig {
+public class BeanH2ServerConfig {
 
     // H2 Web Console (http://localhost:4444) - tek örnek
     /*@Bean(destroyMethod = "stop")

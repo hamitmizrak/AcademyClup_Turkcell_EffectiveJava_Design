@@ -1,10 +1,10 @@
 package com.hamitmizrak.bad.repository;
 
-import com.hamitmizrak.bad.auth.Role;
-import com.hamitmizrak.bad.auth.User;
+import com.hamitmizrak.bad.auth.AuthRole;
+import com.hamitmizrak.bad.auth.AuthUser;
 import java.sql.*;
 
-public class UserRepository {
+public class DataUserRepository {
 
     // Kötü: AppointmentRepository'deki config'i tekrar etmiyoruz, doğrudan yazıyoruz.
     private static String URL = "jdbc:h2:~/hospital_bad_db;AUTO_SERVER=TRUE";
@@ -14,12 +14,12 @@ public class UserRepository {
     public static void init() {
         try (Connection c = DriverManager.getConnection(URL, USER, PASS);
              Statement st = c.createStatement()) {
-            st.execute(User.CREATE_SQL); // Kötü: model içindeki SQL
+            st.execute(AuthUser.CREATE_SQL); // Kötü: model içindeki SQL
         } catch (Exception ignored) {}
     }
 
     // Kötü: PreparedStatement yok → injection riski
-    public static Long save(User u) {
+    public static Long save(AuthUser u) {
         String sql = "INSERT INTO USERS(USERNAME,PASSWORD,ROLE,NAME,NATIONAL_ID) VALUES('" +
                 u.username + "','" + u.password + "','" + u.role.name() + "','" + u.name + "','" + u.nationalId + "')";
         try (Connection c = DriverManager.getConnection(URL, USER, PASS);
@@ -30,17 +30,17 @@ public class UserRepository {
         return null;
     }
 
-    public static User findByUsernameAndPassword(String username, String password) {
+    public static AuthUser findByUsernameAndPassword(String username, String password) {
         String sql = "SELECT * FROM USERS WHERE USERNAME='" + username + "' AND PASSWORD='" + password + "'";
         try (Connection c = DriverManager.getConnection(URL, USER, PASS);
              Statement st = c.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
             if (rs.next()) {
-                User u = new User();
+                AuthUser u = new AuthUser();
                 u.id = rs.getLong("ID");
                 u.username = rs.getString("USERNAME");
                 u.password = rs.getString("PASSWORD");
-                u.role = Role.valueOf(rs.getString("ROLE"));
+                u.role = AuthRole.valueOf(rs.getString("ROLE"));
                 u.name = rs.getString("NAME");
                 u.nationalId = rs.getString("NATIONAL_ID");
 

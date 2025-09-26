@@ -1,5 +1,5 @@
 package com.hamitmizrak.bad.auth;
 
-public enum Role {
+public enum AuthRole {
     ADMIN, DOCTOR, PATIENT
 }

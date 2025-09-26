@@ -4,7 +4,7 @@ package com.hamitmizrak.bad.util;
 import java.io.IOException;
 import java.nio.file.*;
 
-public class BadLogger {
+public class UtilBadLogger {
     // Kötü: basit dosya append; eşzamanlı erişimde bozulur
     public static void log(String msg) {
         try {

@@ -3,7 +3,7 @@ package com.hamitmizrak.bad.util;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class ThreadStuff {
+public class UtilThreadStuff {
 
     // Kötü: gereksiz global sayaç
     public static AtomicInteger counter = new AtomicInteger();

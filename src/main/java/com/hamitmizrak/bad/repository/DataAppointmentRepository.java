@@ -2,8 +2,8 @@ package com.hamitmizrak.bad.repository;
 
 
 
-import com.hamitmizrak.bad.model.Appointment;
-import com.hamitmizrak.bad.model.AppointmentStatus;
+import com.hamitmizrak.bad.model.ModelAppointment;
+import com.hamitmizrak.bad.model.ModelAppointmentStatus;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,7 +31,7 @@ Katman ihlali (model SQL’e bağımlı; repo dosya I/O yapıyor).
 Null/sihrî dönüşler, hata yönetimi yok.
 */
 
-public class AppointmentRepository {
+public class DataAppointmentRepository {
 
     // Kötü: Hard-coded config, güvenlik yok
     public static String URL = "jdbc:h2:~/hospital_bad_db;AUTO_SERVER=TRUE";
@@ -54,7 +54,7 @@ public class AppointmentRepository {
     // Kötü: repository içinde dosya okuma ve rastgele yan görevler
     public static void init() {
         try (Connection c = conn(); Statement st = c.createStatement()) {
-            st.execute(Appointment.CREATE_SQL); // Kötü: Model içindeki SQL’e bağımlılık
+            st.execute(ModelAppointment.CREATE_SQL); // Kötü: Model içindeki SQL’e bağımlılık
             // Kötü: anlamsız dosya okuma (I/O karışmış)
             Path p = Path.of(System.getProperty("user.home"), "hospital-note.txt");
             if (!Files.exists(p)) Files.writeString(p, "created: " + new Date());
@@ -64,7 +64,7 @@ public class AppointmentRepository {
     }
 
     // Kötü: PreparedStatement yok, injection mümkün
-    public static Long save(Appointment a) {
+    public static Long save(ModelAppointment a) {
         String sql = "INSERT INTO APPOINTMENT(PATIENT_ID,DOCTOR_ID,START_TS,MINUTES,STATUS) VALUES(" +
                 a.patientId + "," + a.doctorId + ", TIMESTAMP '" + F.format(a.start) + "'," +
                 a.minutes + ",'" + a.status.name() + "');";
@@ -79,8 +79,8 @@ public class AppointmentRepository {
         return null; // Kötü: null dönmek
     }
 
-    public static List<Appointment> findAll() {
-        List<Appointment> list = new ArrayList();
+    public static List<ModelAppointment> findAll() {
+        List<ModelAppointment> list = new ArrayList();
         try {
             Connection c = conn(); // Kötü: try-with-resources yok
             Statement st = c.createStatement();
@@ -90,14 +90,14 @@ public class AppointmentRepository {
                 // KÖTÜ PRATİK: Parametre sırası hatasına açık, zorunlu alan garantisi yok,
                 // kapsülleme (encapsulation) ihlali: a.status alanına doğrudan erişim ❌
                 // EKİSİ ❌
-                Appointment a = new Appointment(
+                ModelAppointment a = new ModelAppointment(
                         rs.getLong("ID"),
                         rs.getLong("PATIENT_ID"),
                         rs.getLong("DOCTOR_ID"),
                         rs.getTimestamp("START_TS"),
                         rs.getInt("MINUTES")
                 );
-                a.status = AppointmentStatus.valueOf(rs.getString("STATUS"));
+                a.status = ModelAppointmentStatus.valueOf(rs.getString("STATUS"));
                 list.add(a);
             }
             // Kötü: kapatmalar eksik (sızıntı riski)
@@ -109,7 +109,7 @@ public class AppointmentRepository {
         return list;
     }
 
-    public static int updateStatus(Long id, AppointmentStatus stt) {
+    public static int updateStatus(Long id, ModelAppointmentStatus stt) {
         String sql = "UPDATE APPOINTMENT SET STATUS='" + stt.name() + "' WHERE ID=" + id;
         try (Connection c = conn(); Statement st = c.createStatement()) {
             return st.executeUpdate(sql);

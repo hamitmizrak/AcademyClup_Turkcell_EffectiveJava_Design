@@ -1,9 +1,9 @@
 package com.hamitmizrak.bad.service;
 
 
-import com.hamitmizrak.bad.model.Appointment;
-import com.hamitmizrak.bad.model.AppointmentStatus;
-import com.hamitmizrak.bad.repository.AppointmentRepository;
+import com.hamitmizrak.bad.model.ModelAppointment;
+import com.hamitmizrak.bad.model.ModelAppointmentStatus;
+import com.hamitmizrak.bad.repository.DataAppointmentRepository;
 
 
 import java.util.*;
@@ -14,22 +14,22 @@ Service iş kuralları yok; CLI içinde iş kuralı.
 Optional yanlış (get() patlatır), Regex kırılgan, Reflection gereksiz,
 Thread’ler yanlış (race condition), System.out ile sözde logging, i18n yok.
 */
-public class HospitalService {
+public class MiddleHospitalService {
 
     // Kötü: state global gibi kullanılıyor
-    public static List<Appointment> CACHE = new ArrayList();
+    public static List<ModelAppointment> CACHE = new ArrayList();
 
     public static Long createAppointment(Long patientId, Long doctorId, Date start, int minutes) {
-        Appointment a = new Appointment(null, patientId, doctorId, start, minutes);
-        Long id = AppointmentRepository.save(a);
+        ModelAppointment a = new ModelAppointment(null, patientId, doctorId, start, minutes);
+        Long id = DataAppointmentRepository.save(a);
         a.id = id; // Kötü: id dışarıdan set
         CACHE.add(a); // Kötü: senkronizasyon yok
         return id;
     }
 
-    public static List<Appointment> list() {
+    public static List<ModelAppointment> list() {
         // Kötü: repo + cache karışık, tutarlılık yok
-        List<Appointment> db = AppointmentRepository.findAll();
+        List<ModelAppointment> db = DataAppointmentRepository.findAll();
         db.addAll(CACHE);
         // Kötü: çakışmalar kontrol edilmiyor
         return db;
@@ -37,13 +37,13 @@ public class HospitalService {
 
     public static void changeStatus(Long id, String newStatus) {
         // Kötü: enum dönüşüm hataya açık
-        AppointmentStatus st = AppointmentStatus.valueOf(newStatus);
-        AppointmentRepository.updateStatus(id, st);
+        ModelAppointmentStatus st = ModelAppointmentStatus.valueOf(newStatus);
+        DataAppointmentRepository.updateStatus(id, st);
         // Kötü: cache güncellemesi yok
     }
 
     public static void remove(Long id) {
-        AppointmentRepository.deleteById(id);
+        DataAppointmentRepository.deleteById(id);
         // Kötü: CACHE temizlenmedi, tutarsızlık
     }
 }

@@ -1,7 +1,7 @@
 package com.hamitmizrak.bad.model;
 
 
-import com.hamitmizrak.bad.common.Audited;
+import com.hamitmizrak.bad.common.CommonAudited;
 
 import java.util.*;
 
@@ -22,14 +22,14 @@ Annotation göstermelik.
  */
 
 // Kötü: Model içinde bambaşka sorumluluklar tutulacak
-@Audited("appointment")
-public class Appointment implements Comparable { // Kötü: raw Comparable
+@CommonAudited("appointment")
+public class ModelAppointment implements Comparable { // Kötü: raw Comparable
     public Long id;
     public Long patientId;
     public Long doctorId;
     public Date start;           // Kötü: java.time yerine Date
     public int minutes;          // Kötü: Duration yok
-    public AppointmentStatus status = AppointmentStatus.PENDING;
+    public ModelAppointmentStatus status = ModelAppointmentStatus.PENDING;
 
     // Kötü: model içinde SQL tutmak (tamamen yanlış katmanlama)
     public static final String CREATE_SQL = """
@@ -44,7 +44,7 @@ public class Appointment implements Comparable { // Kötü: raw Comparable
         """;
 
     // Kötü: gereksiz ctor, validation yok
-    public Appointment(Long id, Long patientId, Long doctorId, Date start, int minutes) {
+    public ModelAppointment(Long id, Long patientId, Long doctorId, Date start, int minutes) {
         this.id = id;
         this.patientId = patientId;
         this.doctorId = doctorId;
@@ -54,15 +54,15 @@ public class Appointment implements Comparable { // Kötü: raw Comparable
 
     // Kötü: raw Comparable — ClassCastException riski
     @Override public int compareTo(Object o) {
-        if (o instanceof Appointment a) { // Pattern matching burada gereksiz
+        if (o instanceof ModelAppointment a) { // Pattern matching burada gereksiz
             return this.start.compareTo(a.start);
         }
         return 0; // Kötü: sessizce 0 dönmek
     }
 
     // Kötü: anlamsız iç sınıf
-    public static class StartDescComparator implements Comparator<Appointment> {
-        @Override public int compare(Appointment a1, Appointment a2) {
+    public static class StartDescComparator implements Comparator<ModelAppointment> {
+        @Override public int compare(ModelAppointment a1, ModelAppointment a2) {
             return a2.start.compareTo(a1.start);
         }
     }

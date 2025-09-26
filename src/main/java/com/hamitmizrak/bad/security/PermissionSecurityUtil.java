@@ -6,7 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Random;
 
-public class SecurityUtil {
+public class PermissionSecurityUtil {
     private static final Random R = new Random(); // Kötü: güvenli değil (predictable)
 
     // Kötü: Base64 şifreleme değildir, sadece kodlama

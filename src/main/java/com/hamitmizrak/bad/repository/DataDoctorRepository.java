@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DoctorRepository {
+public class DataDoctorRepository {
     private static String URL = "jdbc:h2:~/hospital_bad_db;AUTO_SERVER=TRUE";
     private static String USER = "sa";
     private static String PASS = "";
